@@ -68,6 +68,14 @@ six = "*"
 
 [[package]]
 category = "main"
+description = "The Pattern Matching for Python you always dreamed of"
+name = "pampy"
+optional = false
+python-versions = ">3.6"
+version = "0.3.0"
+
+[[package]]
+category = "main"
 description = "A library that enables function composition similar to using Unix pipes."
 name = "pipetools"
 optional = false
@@ -165,8 +173,8 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "6daaa95c7933fb24a3b1073d144822969b0bf847239f31d6827735d650e0ad89"
-python-versions = "^3.6"
+content-hash = "34f0df93de82cc6dcc67fd68c877294e0bbdb247642ffb094aa1ec2b6e21f214"
+python-versions = "^3.7"
 
 [metadata.files]
 atomicwrites = [
@@ -192,6 +200,10 @@ more-itertools = [
 packaging = [
     {file = "packaging-20.3-py2.py3-none-any.whl", hash = "sha256:82f77b9bee21c1bafbf35a84905d604d5d1223801d639cf3ed140bd651c08752"},
     {file = "packaging-20.3.tar.gz", hash = "sha256:3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3"},
+]
+pampy = [
+    {file = "pampy-0.3.0-py3-none-any.whl", hash = "sha256:304470a6562173096fc88c22dc0ab50401ca2e3875a8725ee510759ec8ba58ff"},
+    {file = "pampy-0.3.0.tar.gz", hash = "sha256:82054212e4478fc22163c55321a3583eda9918aff4440eed6c197e872a2a667b"},
 ]
 pipetools = [
     {file = "pipetools-0.3.5.tar.gz", hash = "sha256:fea8da220871524885bb34e117e5b9999130ab20d98f45e64a5148d74795515a"},
