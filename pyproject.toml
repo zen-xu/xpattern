@@ -12,6 +12,8 @@ pampy = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
+pytest-cov = "^2.8.1"
+pytest-sugar = "^0.9.3"
 
 [tool.isort]
 line_length = 88
