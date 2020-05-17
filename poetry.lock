@@ -86,17 +86,6 @@ python-versions = ">3.6"
 version = "0.3.0"
 
 [[package]]
-category = "main"
-description = "A library that enables function composition similar to using Unix pipes."
-name = "pipetools"
-optional = false
-python-versions = "*"
-version = "0.3.5"
-
-[package.dependencies]
-setuptools = ">=0.6b1"
-
-[[package]]
 category = "dev"
 description = "plugin and hook calling mechanisms for python"
 name = "pluggy"
@@ -220,7 +209,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "5f036d94ec57e0ecfa5fb8589202c9082e88b6390769011ac614731ab8cbfc0c"
+content-hash = "5e5f4e21739bfe7cf54eada7c0ecb77441d7f506ac67dcee6a65dd5b84e2c3b8"
 python-versions = "^3.6.1"
 
 [metadata.files]
@@ -284,9 +273,6 @@ packaging = [
 pampy = [
     {file = "pampy-0.3.0-py3-none-any.whl", hash = "sha256:304470a6562173096fc88c22dc0ab50401ca2e3875a8725ee510759ec8ba58ff"},
     {file = "pampy-0.3.0.tar.gz", hash = "sha256:82054212e4478fc22163c55321a3583eda9918aff4440eed6c197e872a2a667b"},
-]
-pipetools = [
-    {file = "pipetools-0.3.5.tar.gz", hash = "sha256:fea8da220871524885bb34e117e5b9999130ab20d98f45e64a5148d74795515a"},
 ]
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
