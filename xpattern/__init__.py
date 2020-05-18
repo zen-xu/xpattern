@@ -1,6 +1,8 @@
 __version__ = "0.1.0"
 
+from pampy import ANY
 from pampy import HEAD
+from pampy import REST
 from pampy import TAIL
 from pampy import MatchError
 from pampy import _
