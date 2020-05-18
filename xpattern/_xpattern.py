@@ -1,10 +1,14 @@
 from collections.abc import Iterable
 
-from pampy import match
-from pampy import match_value
+from pampy import MatchError
+from pampy import _
 from pampy.helpers import BoxedArgs
 from pampy.pampy import NoDefault
+from pampy.pampy import match
+from pampy.pampy import match_value
+from pampy.pampy import run as pampy_run
 
+from ._xobject import Pipe
 from ._xobject import X
 from ._xobject import XObject
 from ._xobject import pipe
@@ -37,6 +41,16 @@ class CaseError(Exception):
     pass
 
 
+def run(action, var):
+    if isinstance(action, Pipe):
+        if isinstance(var, BoxedArgs):
+            var = var.get()
+        if isinstance(var, Iterable) and len(var) == 1:
+            var = var[0]
+        return action(var)
+    return pampy_run(action, var)
+
+
 class caseof(object):
     def __init__(self, value, cases=None, default=NoDefault, strict=True):
         self.value = value
@@ -52,11 +66,28 @@ class caseof(object):
         )
 
     def __invert__(self):
-        args = []
+        patterns = []
         for case in self.cases:
             pattern, action = case.pattern, case.action
+            patterns.append(pattern)
+
             if isinstance(action, XObject):
                 action = pipe | action or (lambda x: x)
-            args += [pattern, action]
 
-        return match(self.value, *args, default=self.default, strict=self.strict)
+            matched_as_value, args = match_value(pattern, self.value)
+            if matched_as_value:
+                lambda_args = args if len(args) > 0 else BoxedArgs(self.value)
+                return run(action, lambda_args)
+
+        if self.default is NoDefault and self.strict is False:
+            default = False
+        else:
+            default = self.default
+
+        if default is NoDefault:
+            if _ not in patterns:
+                raise MatchError(
+                    "'_' not provided. This case is not handled:\n%s" % str(self.value)
+                )
+        else:
+            return default
