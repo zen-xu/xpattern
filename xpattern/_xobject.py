@@ -55,7 +55,11 @@ class Pipe(object):
 
     def __or__(self, next_func):
         if isinstance(next_func, XObject):
-            next_func = next_func._x_func
+            if next_func._x_func is None:
+                next_func = lambda x: x
+                set_name(lambda: "X", next_func)
+            else:
+                next_func = next_func._x_func
 
         return self.bind(self.func, next_func)
 
