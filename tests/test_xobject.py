@@ -1,12 +1,18 @@
+import re
+
 import pytest
 
 from xpattern import X
+from xpattern import _
+from xpattern import caseof
+from xpattern import m
 
 
 class Item(object):
     a = 1
 
 
+# fmt: off
 @pytest.mark.parametrize(
     "x_expression, argument, expected",
     [
@@ -88,7 +94,25 @@ class Item(object):
         (X(1, 2, 4), lambda x, y, z: x * y * z, 8),
         (X + X, 7, 14),
         (X ** 2 - 3 + X, 6, 39),
+        (X ** (2 - 3 + X), 6, 7776),
     ],
 )
 def test_operators(x_expression, argument, expected):
     assert x_expression._x_func(argument) == expected
+
+
+@pytest.mark.parametrize(
+    "case, expected",
+    [
+        (caseof(1) | m(1) >> X + 1, 2),
+        (caseof([1, 2, 3]) | m([1, _, 3]) >> X + 1, 3),
+        (caseof([1, 2, 3]) | m([1, _, 3]) >> (X ** (3 * 2 - X)), 16),
+        (caseof(Item()) | m(Item) >> X.a, 1),
+        (caseof({"a": 1, "b": 2}) | m(dict) >> X["b"], 2),
+        (caseof("fuffy-my-dog") | m(re.compile(r"(\w+)-(\w+)-dog")) >> X[0], "fuffy"),
+        (caseof("fuffy-my-dog") | m(re.compile(r"(\w+)-(\w+)-dog")) >> X[0].upper(), "FUFFY"),
+        (caseof("fuffy-my-dog") | m(re.compile(r"\w+-\w+-dog")) >> X.upper(), "FUFFY-MY-DOG"),
+    ],
+)
+def test_action_with_xobject(case, expected):
+    assert ~case == expected
