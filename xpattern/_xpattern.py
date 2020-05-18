@@ -38,7 +38,7 @@ class CaseError(Exception):
 
 
 class caseof(object):
-    def __init__(self, value, cases=None, *, default=NoDefault, strict=True):
+    def __init__(self, value, cases=None, default=NoDefault, strict=True):
         self.value = value
         self.cases = cases or []
         self.default = default
