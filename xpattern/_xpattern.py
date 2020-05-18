@@ -59,4 +59,4 @@ class caseof(object):
                 action = pipe | action or (lambda x: x)
             args += [pattern, action]
 
-        return match(self.value, *args, self.default, self.strict)
+        return match(self.value, *args, default=self.default, strict=self.strict)
