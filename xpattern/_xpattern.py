@@ -16,7 +16,10 @@ class Matcher(object):
     def __init__(self, pattern=None):
         self.pattern = pattern
 
-    def __call__(self, pattern):
+    def __call__(self, pattern, *external_patterns):
+        if external_patterns:
+            pattern = [pattern] + list(external_patterns)
+
         return Matcher(pattern)
 
     def __rshift__(self, action):
