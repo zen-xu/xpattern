@@ -18,6 +18,7 @@ jobs:
 
       - name: Linting
         run: |
+          pip install wheel
           pip install pre-commit
           pre-commit run --all-files
 
