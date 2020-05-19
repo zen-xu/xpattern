@@ -172,3 +172,19 @@ def test_match_enum():
         | m(Color.RED) >> "red"
         | m(_) >> "else"
     ) == "else"
+
+
+def test_external_patterns():
+    def f(l):
+        return ~(caseof(l)
+            | m(int, int) >> "[int, int]"
+            | m(int, str) >> "[int, str]"
+            | m(int, [int, str], int) >> "[int, [int, str], int]"
+            | m(_) >> "other"
+        )
+
+    assert f([1, 1]) == "[int, int]"
+    assert f([1, "1"]) == "[int, str]"
+    assert f([1, [1, "a"], 2]) == "[int, [int, str], int]"
+    assert f([1, [1, "a", "c"], 2]) == "other"
+    assert f(1) == "other"
