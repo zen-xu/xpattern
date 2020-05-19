@@ -4,12 +4,10 @@ from pampy import MatchError
 from pampy import _
 from pampy.helpers import BoxedArgs
 from pampy.pampy import NoDefault
-from pampy.pampy import match
 from pampy.pampy import match_value
 from pampy.pampy import run as pampy_run
 
 from ._xobject import Pipe
-from ._xobject import X
 from ._xobject import XObject
 from ._xobject import pipe
 

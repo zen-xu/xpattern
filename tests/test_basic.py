@@ -18,7 +18,7 @@ from xpattern import m
     [
         (caseof(3) | m(3) >> True),
         (caseof(3) | m(_) >> True),
-        (caseof(3) 
+        (caseof(3)
             | m(1) >> False
             | m(2) >> False
             | m(3) >> True
@@ -97,7 +97,7 @@ def test_match_action_can_be_empty_list():
 def test_match_raise_lambda_error():
     with pytest.raises(MatchError) as error:
         ~(caseof([1, 2, 3])
-            | m([1, _, 3]) >> (lambda: "xxxxx {}".format())
+            | m([1, _, 3]) >> (lambda: "xxxxx {}".format()) # noqa
         )
 
     assert "lambda" in str(error.value)
@@ -105,10 +105,10 @@ def test_match_raise_lambda_error():
 
 
 def test_match_class_hierarchy():
-    class Pet: pass
-    class Dog(Pet): pass
-    class Cat(Pet): pass
-    class Hamster(Pet): pass
+    class Pet: pass          # noqa
+    class Dog(Pet): pass     # noqa
+    class Cat(Pet): pass     # noqa
+    class Hamster(Pet): pass # noqa
 
     def what_is(x):
         return ~(caseof(x)
@@ -129,10 +129,10 @@ def test_regex_groups():
     def what_is(pet):
         return ~(caseof(pet)
             | m(re.compile(r"(\w+)-(\w+)-cat$")) >> (lambda name, my: "cat " + name)
-            | m(re.compile(r"(\w+)-(\w+)-dog$")) >> (lambda name, my: "dog "+ name)
+            | m(re.compile(r"(\w+)-(\w+)-dog$")) >> (lambda name, my: "dog " + name)
             | m(_) >> "something else"
         )
-    
+
     assert what_is("fuffy-my-dog") == "dog fuffy"
     assert what_is("puffy-her-dog") == "dog puffy"
     assert what_is("carla-your-cat") == "cat carla"

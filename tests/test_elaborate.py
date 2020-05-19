@@ -1,7 +1,6 @@
 import pytest
 
 from xpattern import REST
-from xpattern import X
 from xpattern import _
 from xpattern import caseof
 from xpattern import m

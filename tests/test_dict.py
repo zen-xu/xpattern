@@ -27,7 +27,7 @@ def test_wild_dicts():
     assert average_age == (2 + 1 + 3) / 3
 
     names = [
-        ~(caseof(row) | m({"type": _, _: str}) >> (lambda type, name_field, name: name)) 
+        ~(caseof(row) | m({"type": _, _: str}) >> (lambda type, name_field, name: name))
         for row in data
     ]
     assert names == ["fuffy", "puffy", "buffy"]

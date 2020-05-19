@@ -76,7 +76,7 @@ def test_dataclasses_with_xobject_action():
             | m(Point(1, 2)) >> X
             | m(Point(_, 2)) >> X + 1
             | m(Point(1, _)) >> X ** 2
-            | m(Point(_, _)) >> X * 2 
+            | m(Point(_, _)) >> X * 2
         )
 
     assert f(Point(1, 2)) == Point(1, 2)
