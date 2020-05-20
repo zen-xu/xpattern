@@ -151,13 +151,13 @@ from xpattern import m
 | Addition              | `X + 1`                                    |
 | Call                  | `X(a, b, c)`                               |
 | Concatenation         | `X + [1, 2, 3]`                            |
-| Containment Test      | `X.\_in\_( [1, 2, 3] )`                    |
+| Containment Test      | `X._in_( [1, 2, 3] )`                    |
 | Contains              | `X._contains_(1)`                          |
 | Division              | `X / 2` or `X // 2`                        |
 | Bitwise And           | `X & 2`                                    |
 | Bitwise Exclusive Or  | `X ^ 2`                                    |
 | Bitwise Inversion     | `~X`                                       |
-| Bitwise Or            | `X | 2`                                    |
+| Bitwise Or            | `X \| 2`                                    |
 | Exponentiation        | `X ** 2`                                   |
 | Identity              | `X._is_(2)`                                |
 | Indexing              | `X[k]`                                     |
