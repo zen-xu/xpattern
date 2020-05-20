@@ -9,7 +9,6 @@
 
 
 ## Let's play now
----
 > Each pattern matchline evaluated in the order they appear.
 
 ```python
