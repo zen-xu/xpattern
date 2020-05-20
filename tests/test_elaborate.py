@@ -80,7 +80,7 @@ def test_lisp():
         return ~(caseof(exp)
             | m(int) >> (lambda x: x)
             | m(callable) >> (lambda x: x)
-            | m((callable, REST)) >> (lambda f, rest: f(*map(lisp, rest)))
+            | m(callable, REST) >> (lambda f, rest: f(*map(lisp, rest)))
             | m(tuple) >> (lambda t: list(map(lisp, t)))
         )
 
