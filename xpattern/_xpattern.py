@@ -49,6 +49,7 @@ def run(action, var):
         if isinstance(var, Iterable) and len(var) == 1:
             var = var[0]
         return action(var)
+
     return pampy_run(action, var)
 
 
@@ -67,6 +68,17 @@ class caseof(object):
         )
 
     def __invert__(self):
+        if isinstance(self.value, XObject):
+
+            def wrapped(x, *args):
+                if args:
+                    x = [x] + list(args)
+                return ~caseof(
+                    x, cases=self.cases, default=self.default, strict=self.strict
+                )
+
+            return wrapped
+
         patterns = []
         for case in self.cases:
             pattern, action = case.pattern, case.action
