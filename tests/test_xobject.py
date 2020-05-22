@@ -121,16 +121,13 @@ def test_action_with_xobject(case, expected):
 
 def test_chain_caseof():
     assert ~(caseof([1, 2, 3])
-        | m(_, _, 3) >> ~(caseof(X)
-            | m(_, 2) >> X
-        )
+        | m(_, _, 3) >> ~(caseof(X) | m(_, 2) >> X)
     ) == 1
 
     pet = {"type": "dog", "details": {"age": 3}}
-    assert ~(caseof(pet) 
+    assert ~(caseof(pet)
         | m({_: {"age": _}}) >> ~(caseof(X)
-            | m(str, int) >> (lambda x, y: y)
-        )
+            | m(str, int) >> (lambda x, y: y))
     ) == 3
 
 
@@ -145,7 +142,6 @@ def test_dataclasses_with_chain_caseof():
         a: int
         b: int
 
-
     @dataclass
     class Class2:
         data: Class1
@@ -153,7 +149,6 @@ def test_dataclasses_with_chain_caseof():
     obj = Class2(Class1(a=1, b=2))
 
     assert ~(caseof(obj)
-        | m(Class2(_)) >> ~(caseof(X)
-            | m(Class1(_, _)) >> (lambda a, b: (a, b))
-        )
-    )  == (1, 2)
+        | m(Class2(_)) >> ~(
+            caseof(X) | m(Class1(_, _)) >> (lambda a, b: (a, b)))
+    )  == (1, 2)  # noqa
