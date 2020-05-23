@@ -8,5 +8,6 @@ from pampy import MatchError
 from pampy import _
 
 from ._xobject import X
+from ._xobject import xfunction
 from ._xpattern import caseof
 from ._xpattern import m

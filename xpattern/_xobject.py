@@ -1,3 +1,4 @@
+from functools import wraps
 from itertools import chain
 
 
@@ -240,3 +241,41 @@ class XObject(object):
 
 
 X = XObject()
+
+
+def xfunction(func):
+    """
+    convert function to XObject
+    """
+
+    def cal_recursion_xobject(arg, x):
+        if not isinstance(arg, XObject):
+            return arg
+        import pdb
+
+        arg = (pipe | arg)(x)
+        if not isinstance(arg, XObject):
+            return arg
+        else:
+            return cal_recursion_xobject(arg, x)
+
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        def subwrapped(x):
+            new_args = []
+            new_kwargs = {}
+            for arg in args:
+                if isinstance(arg, XObject):
+                    arg = cal_recursion_xobject(arg, x)
+                new_args.append(arg)
+
+            for key, keyarg in kwargs.items():
+                if isinstance(keyarg, XObject):
+                    keyarg = cal_recursion_xobject(keyarg, x)
+                new_kwargs[key] = keyarg
+            return func(*args, **kwargs)
+
+        subwrapped.__name__ = "xfunction"
+        return XObject(pipe | subwrapped)
+
+    return wrapped

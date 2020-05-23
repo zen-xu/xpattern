@@ -7,6 +7,7 @@ from xpattern import X
 from xpattern import _
 from xpattern import caseof
 from xpattern import m
+from xpattern import xfunction
 
 
 class Item(object):
@@ -179,3 +180,40 @@ def test_match_XObject():
         | m(X ** 2 - X + 2 == 74) >> True
         | m(_) >> False
     )
+
+
+def test_xfunction():
+    @xfunction
+    def add(a, b):
+        return a + b
+
+    assert add(X, X + 1)._x_func(1) == 3
+    assert add(X, b=X + 1)._x_func(1) == 3
+    assert add(a=X, b=X + 1)._x_func(1) == 3
+    assert add(a=add(X + 1, 4), b=add(X * 9, 7))._x_func(2) == 32
+
+
+def test_xfunction_action():
+    @xfunction
+    def add(a, b):
+        return a + b
+
+    assert ~(caseof([1, "b", 2])
+        | m(_, "b", _) >> add(X[0], X[1] + 1)
+    ) == 4
+
+
+def test_xfunction_pattern():
+    @xfunction
+    def greater_than_4(x):
+        return x > 4
+
+    assert ~(caseof(1)
+        | m(greater_than_4(X + 5)) >> "greater than 4"
+        | m(_) >> "equal or lesser than 4"
+    )  == "greater than 4"
+
+    assert ~(caseof(1)
+        | m(greater_than_4(X)) >> "greater than 4"
+        | m(_) >> "equal or lesser than 4"
+    )  == "equal or lesser than 4"
