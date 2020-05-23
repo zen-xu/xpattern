@@ -161,10 +161,6 @@ from xpattern import m
 ~(caseof(lambda x, y: x + y)
     | m(callable) >> X(1, 2)   # => 3
 )
-
-~(caseof((1, 2, 3))
-    | m(X[2] == 3) >> X[2] + 4  # => 7
-)
 ```
 
 | Operation             | Syntax                                     |
@@ -194,3 +190,22 @@ from xpattern import m
 | Ordering              | `X < 2` or `X <= 2` or `X > 2` or `X >= 2` |
 | Equality              | `X == 2`                                   |
 | Difference            | `X != 2`                                   |
+
+
+#### match pattern with XObject
+
+```python
+from xpattern import X
+from xpattern import caseof
+from xpattern import m
+
+
+~(caseof((1, 2, 3))
+    | m(X[2] == 3) >> X[2] + 4  # => 7
+)
+
+# same as
+~(caseof((1, 2, 3))
+    | m(lambda x: x[2] == 3) >> (lambda x: x[2] + 4)  # => 7
+)
+```
