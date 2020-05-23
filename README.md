@@ -100,6 +100,23 @@ x = [1, 2, 3]
 )
 ```
 
+### Chain match
+
+```python
+from xpattern import _
+from xpattern import caseof
+from xpattern import m
+
+
+pet = {"type": "dog", "details": {"age": 3}}
+~(caseof(pet)
+    | m({_: {"age": _}}) >> ~(caseof(X)
+        | m(int, int) >> (lambda x, y: x + y)
+        | m(str, int) >> (lambda x, y: y)
+    )
+)  # => 3
+```
+
 ### More pattern cases
 
 > Your can visit repo [pampy](https://github.com/santinic/pampy/) get more pattern cases, `xpattern` is *Syntactic Sugar* of `pampy`
@@ -144,6 +161,10 @@ from xpattern import m
 ~(caseof(lambda x, y: x + y)
     | m(callable) >> X(1, 2)   # => 3
 )
+
+~(caseof((1, 2, 3))
+    | m(X[2] == 3) >> X[2] + 4  # => 7
+)
 ```
 
 | Operation             | Syntax                                     |
@@ -151,13 +172,13 @@ from xpattern import m
 | Addition              | `X + 1`                                    |
 | Call                  | `X(a, b, c)`                               |
 | Concatenation         | `X + [1, 2, 3]`                            |
-| Containment Test      | `X._in_( [1, 2, 3] )`                    |
+| Containment Test      | `X._in_( [1, 2, 3] )`                      |
 | Contains              | `X._contains_(1)`                          |
 | Division              | `X / 2` or `X // 2`                        |
 | Bitwise And           | `X & 2`                                    |
 | Bitwise Exclusive Or  | `X ^ 2`                                    |
 | Bitwise Inversion     | `~X`                                       |
-| Bitwise Or            | `X \| 2`                                    |
+| Bitwise Or            | `X \| 2`                                   |
 | Exponentiation        | `X ** 2`                                   |
 | Identity              | `X._is_(2)`                                |
 | Indexing              | `X[k]`                                     |

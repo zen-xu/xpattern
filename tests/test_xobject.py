@@ -128,6 +128,7 @@ def test_chain_caseof():
     pet = {"type": "dog", "details": {"age": 3}}
     assert ~(caseof(pet)
         | m({_: {"age": _}}) >> ~(caseof(X)
+            | m(int, int) >> (lambda x, y: x + y)
             | m(str, int) >> (lambda x, y: y))
     ) == 3
 
@@ -169,6 +170,10 @@ def test_match_XObject():
         | m(X.upper() == "ABC") >> True
         | m(_) >> False
     )
+
+    assert ~(caseof((1, 2, 3))
+        | m(X[2] == 3) >> X[2] + 4
+    ) == 7
 
     assert ~(caseof(9)
         | m(X ** 2 - X + 2 == 74) >> True
