@@ -211,9 +211,9 @@ def test_xfunction_pattern():
     assert ~(caseof(1)
         | m(greater_than_4(X + 5)) >> "greater than 4"
         | m(_) >> "equal or lesser than 4"
-    )  == "greater than 4"
+    ) == "greater than 4"
 
     assert ~(caseof(1)
         | m(greater_than_4(X)) >> "greater than 4"
         | m(_) >> "equal or lesser than 4"
-    )  == "equal or lesser than 4"
+    ) == "equal or lesser than 4"
