@@ -251,8 +251,6 @@ def xfunction(func):
     def cal_recursion_xobject(arg, x):
         if not isinstance(arg, XObject):
             return arg
-        import pdb
-
         arg = (pipe | arg)(x)
         if not isinstance(arg, XObject):
             return arg
