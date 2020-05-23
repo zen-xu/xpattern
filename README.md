@@ -209,3 +209,49 @@ from xpattern import m
     | m(lambda x: x[2] == 3) >> (lambda x: x[2] + 4)  # => 7
 )
 ```
+
+#### xfunction
+
+`XObject` only can represent as function like `X(1, 2)`, but can not be as args in function `func(X, X + 2)`
+
+Now you can try to use `xfunction` realizing it!
+
+```python
+from xpattern import X
+from xpattern import _
+from xpattern import caseof
+from xpattern import m
+from xpattern import xfunction
+
+
+@xfunction
+def add(a, b):
+    return a + b
+
+# in actions
+~(caseof(1)
+    | m(int) >> add(X, X)   # => 2
+)
+
+# recursion xfunction
+~(caseof(2)
+    | m(int) >> add(add(X + 1, 4), b=add(X * 9, 7))   # => 32
+)
+
+
+@xfunction
+def greater_than_4(x):
+    return x > 4
+
+
+# in patterns
+~(caseof(1)
+    | m(greater_than_4(X + 5)) >> "greater than 4"
+    | m(_) >> "equal or lesser than 4"
+)  # => "greater than 4"
+
+~(caseof(1)
+    | m(greater_than_4(X)) >> "greater than 4"
+    | m(_) >> "equal or lesser than 4"
+)  # => "equal or lesser than 4"
+```
