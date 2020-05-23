@@ -4,7 +4,7 @@ from pampy import MatchError
 from pampy import _
 from pampy.helpers import BoxedArgs
 from pampy.pampy import NoDefault
-from pampy.pampy import match_value
+from pampy.pampy import match_value as pampy_match_value
 from pampy.pampy import run as pampy_run
 
 from ._xobject import Pipe
@@ -51,6 +51,19 @@ def run(action, var):
         return action(var)
 
     return pampy_run(action, var)
+
+
+def match_value(pattern, value):
+    if isinstance(pattern, XObject):
+        return_value = pattern._x_func(value)
+        if not isinstance(return_value, bool):
+            raise MatchError(
+                f"Warning! XObject matcher {pattern} is not returning a boolean"
+                f", but instead {return_value}"
+            )
+        return return_value, []
+
+    return pampy_match_value(pattern, value)
 
 
 class caseof(object):

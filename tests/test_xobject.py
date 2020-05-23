@@ -2,6 +2,7 @@ import re
 
 import pytest
 
+from xpattern import MatchError
 from xpattern import X
 from xpattern import _
 from xpattern import caseof
@@ -152,3 +153,24 @@ def test_dataclasses_with_chain_caseof():
         | m(Class2(_)) >> ~(
             caseof(X) | m(Class1(_, _)) >> (lambda a, b: (a, b)))
     )  == (1, 2)  # noqa
+
+
+def test_match_XObject():
+    assert ~(caseof((1, 2, 3))
+        | m(X[2] == 3) >> True
+    )
+
+    with pytest.raises(MatchError):
+        ~(caseof((1, 2, 3))
+            | m(X[2]) >> True
+        )
+
+    assert ~(caseof("abc")
+        | m(X.upper() == "ABC") >> True
+        | m(_) >> False
+    )
+
+    assert ~(caseof(9)
+        | m(X ** 2 - X + 2 == 74) >> True
+        | m(_) >> False
+    )
