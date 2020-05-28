@@ -4,12 +4,18 @@ from enum import Enum
 
 import pytest
 
+from pampy.helpers import UnderscoreType
+
 from xpattern import HEAD
 from xpattern import TAIL
 from xpattern import MatchError
 from xpattern import _
 from xpattern import caseof
 from xpattern import m
+
+
+def test_UnderscoreType_equals():
+    assert _ == UnderscoreType()
 
 
 # fmt: off
