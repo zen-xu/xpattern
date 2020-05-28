@@ -89,7 +89,7 @@ lisp((reduce, plus, (range, 10)))   # => 45
     | m(str, int)  >> (lambda a, b: "a tuple (a, b) you can use in a function")
     | m(1, 2, _)   >> "any list of 3 elements that begins with [1, 2]"
     | m({"x", _})  >> "any dict with a key 'x' and any value associated"
-    | _         >> "anything else"
+    | _            >> "anything else"
 )
 ```
 
@@ -198,7 +198,7 @@ from xpattern import m
 )
 
 ~(caseof([1, 2, 3])
-    | m(1, 2, 3) >> X + [4, 5, 6]   # => [1, 2, 3, 4, 5, 6]
+    | m(1, 2, 3) >> X + [4, 5, 6]              # => [1, 2, 3, 4, 5, 6]
 )
 
 ~(caseof(9)
@@ -210,7 +210,7 @@ from xpattern import m
 )
 
 ~(caseof(lambda x, y: x + y)
-    | m(callable) >> X(1, 2)   # => 3
+    | m(callable) >> X(1, 2)        # => 3
 )
 ```
 
@@ -281,7 +281,7 @@ def add(a, b):
 
 # in actions
 ~(caseof(1)
-    | m(int) >> add(X, X)   # => 2
+    | m(int) >> add(X, X)                             # => 2
 )
 
 # recursion xfunction
