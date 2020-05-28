@@ -169,7 +169,7 @@ def test_match_XObject():
 
     assert ~(caseof("abc")
         | m(X.upper() == "ABC") >> True
-        | m(_) >> False
+        | _ >> False
     )
 
     assert ~(caseof((1, 2, 3))
@@ -178,7 +178,7 @@ def test_match_XObject():
 
     assert ~(caseof(9)
         | m(X ** 2 - X + 2 == 74) >> True
-        | m(_) >> False
+        | _ >> False
     )
 
 
@@ -210,10 +210,10 @@ def test_xfunction_pattern():
 
     assert ~(caseof(1)
         | m(greater_than_4(X + 5)) >> "greater than 4"
-        | m(_) >> "equal or lesser than 4"
+        | _ >> "equal or lesser than 4"
     ) == "greater than 4"
 
     assert ~(caseof(1)
         | m(greater_than_4(X)) >> "greater than 4"
-        | m(_) >> "equal or lesser than 4"
+        | _ >> "equal or lesser than 4"
     ) == "equal or lesser than 4"

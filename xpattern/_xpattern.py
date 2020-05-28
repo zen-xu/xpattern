@@ -3,6 +3,7 @@ from collections.abc import Iterable
 from pampy import MatchError
 from pampy import _
 from pampy.helpers import BoxedArgs
+from pampy.helpers import UnderscoreType
 from pampy.pampy import NoDefault
 from pampy.pampy import match_value as pampy_match_value
 from pampy.pampy import run as pampy_run
@@ -10,6 +11,9 @@ from pampy.pampy import run as pampy_run
 from ._xobject import Pipe
 from ._xobject import XObject
 from ._xobject import pipe
+
+
+UnderscoreType.__rshift__ = lambda self, other: Matcher(self) >> other
 
 
 class Matcher(object):

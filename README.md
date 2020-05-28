@@ -38,7 +38,7 @@ def fibonacci(n):
     return ~(caseof(n)
         | m(1) >> 1
         | m(2) >> 1
-        | m(_) >> (lambda x: fibonacci(x - 1) + fibonacci(x - 2))
+        | _ >> (lambda x: fibonacci(x - 1) + fibonacci(x - 2))
     )
 ```
 
@@ -75,7 +75,7 @@ lisp((reduce, plus, (range, 10)))   # => 45
     | m(str, int)  >> (lambda a, b: "a tuple (a, b) you can use in a function")
     | m(1, 2, _)   >> "any list of 3 elements that begins with [1, 2]"
     | m({"x", _})  >> "any dict with a key 'x' and any value associated"
-    | m(_)         >> "anything else"
+    | _         >> "anything else"
 )
 ```
 
@@ -247,11 +247,11 @@ def greater_than_4(x):
 # in patterns
 ~(caseof(1)
     | m(greater_than_4(X + 5)) >> "greater than 4"
-    | m(_) >> "equal or lesser than 4"
+    | _ >> "equal or lesser than 4"
 )  # => "greater than 4"
 
 ~(caseof(1)
     | m(greater_than_4(X)) >> "greater than 4"
-    | m(_) >> "equal or lesser than 4"
+    | _ >> "equal or lesser than 4"
 )  # => "equal or lesser than 4"
 ```

@@ -22,7 +22,7 @@ def test_fibonacci():
         return ~(caseof(n)
             | m(1) >> 1
             | m(2) >> 1
-            | m(_) >> (lambda x: fib(x - 1) + fib(x - 2))
+            | _ >> (lambda x: fib(x - 1) + fib(x - 2))
         )
 
     assert fib(1) == 1
@@ -113,12 +113,12 @@ def test_lambda_cond():
     cond = lambda x: x < 10
     assert ~(caseof(3)
         | m(cond) >> "action"
-        | m(_) >> "else"
+        | _ >> "else"
     ) == "action"
 
     assert ~(caseof(11)
         | m(cond) >> "action1"
-        | m(_) >> "else"
+        | _ >> "else"
     ) == "else"
 
 
@@ -164,7 +164,7 @@ def test_advanced_lambda():
             return ~(caseof(var)
                 | m(pattern1) >> repack
                 | m(pattern2) >> repack
-                | m(_) >> (False, [])
+                | _ >> (False, [])
             )
 
         return f
@@ -197,7 +197,7 @@ def test_advanced_lambda():
             | m(datetime_p(2018, 12, 23)) >> "full match"
             | m(datetime_p(2018, _, _)) >> (lambda month, day: f'{month}/{day} in 2018')
             | m(datetime_p(_, _, _, _, _, _)) >> "any datetime"
-            | m(_) >> "not a datetime"
+            | _ >> "not a datetime"
         )
 
         assert test(datetime(2018, 12, 23)) == "full match"
@@ -233,7 +233,7 @@ def test_typing_example():
             | m(timestamp) >> (lambda x: datetime.fromtimestamp(x))
             | m(Union[day_tuple, dt_tuple]) >> (lambda *x: datetime(*x))
             | m(datetime_p(["%Y-%m-%d", "%Y-%m-%d %H:%M:%S"])) >> (lambda x: x)
-            | m(_) >> None
+            | _ >> None
         )
 
     key_date_tuple = (2018, 1, 1)

@@ -17,7 +17,7 @@ from xpattern import m
     "case",
     [
         (caseof(3) | m(3) >> True),
-        (caseof(3) | m(_) >> True),
+        (caseof(3) | _ >> True),
         (caseof(3)
             | m(1) >> False
             | m(2) >> False
@@ -36,7 +36,7 @@ def test_basic(case):
 def test_match_None():
     assert ~(caseof(None)
         | m(None) >> "None"
-        | m(_) >> 'else') == "None"
+        | _ >> 'else') == "None"
 
 
 def test_match_value_is_vs_equal():
@@ -115,7 +115,7 @@ def test_match_class_hierarchy():
             | m(Dog) >> 'dog'
             | m(Cat) >> 'cat'
             | m(Pet) >> 'any other pet'
-            | m(_) >> 'this is not a pet at all'
+            | _ >> 'this is not a pet at all'
         )
 
     assert what_is(Cat()) == 'cat'
@@ -130,7 +130,7 @@ def test_regex_groups():
         return ~(caseof(pet)
             | m(re.compile(r"(\w+)-(\w+)-cat$")) >> (lambda name, my: "cat " + name)
             | m(re.compile(r"(\w+)-(\w+)-dog$")) >> (lambda name, my: "dog " + name)
-            | m(_) >> "something else"
+            | _ >> "something else"
         )
 
     assert what_is("fuffy-my-dog") == "dog fuffy"
@@ -143,7 +143,7 @@ def test_regex_no_groups():
     def what_is(pet):
         return ~(caseof(pet)
             | m(re.compile(r"fuffy-cat$")) >> (lambda x: "fuffy-cat")
-            | m(_) >> "something else"
+            | _ >> "something else"
         )
 
     assert what_is("my-fuffy-cat") == "fuffy-cat"
@@ -158,19 +158,19 @@ def test_match_enum():
     assert ~(caseof(Color.RED)
         | m(Color.BLUE) >> "blue"
         | m(Color.RED) >> "red"
-        | m(_) >> "else"
+        | _ >> "else"
     ) == "red"
 
     assert ~(caseof(Color.RED)
         | m(Color.BLUE) >> "blue"
         | m(Color.GREEN) >> "green"
-        | m(_) >> "else"
+        | _ >> "else"
     ) == "else"
 
     assert ~(caseof(1)
         | m(Color.BLUE) >> "blue"
         | m(Color.RED) >> "red"
-        | m(_) >> "else"
+        | _ >> "else"
     ) == "else"
 
 
@@ -180,7 +180,7 @@ def test_external_patterns():
             | m(int, int) >> "[int, int]"
             | m(int, str) >> "[int, str]"
             | m(int, [int, str], int) >> "[int, [int, str], int]"
-            | m(_) >> "other"
+            | _ >> "other"
         )
 
     assert f([1, 1]) == "[int, int]"
