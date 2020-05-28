@@ -16,7 +16,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
-pampy = "^0.4.0"
+pampy = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
