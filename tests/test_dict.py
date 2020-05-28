@@ -12,6 +12,13 @@ def test_match_dict():
     assert ~(caseof(pet) | m({_: {"age": _}}) >> (lambda a, b: (a, b))) == ("details", 3)
 
 
+def test_match_dict_with_getitem_style():
+    pet = {"type": "dog", "details": {"age": 3}}
+
+    assert ~(caseof(pet) | m[{"details": {"age": _}}] >> (lambda age: age)) == 3
+    assert ~(caseof(pet) | m[{_: {"age": _}}] >> (lambda a, b: (a, b))) == ("details", 3)
+
+
 def test_wild_dicts():
     data = [
         {"type": "dog", "dog-name": "fuffy", "info": {"age": 2}},

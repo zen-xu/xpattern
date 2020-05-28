@@ -31,6 +31,9 @@ class Matcher(object):
     def __rshift__(self, action):
         return Matchline(self.pattern, action)
 
+    def __getitem__(self, pattern):
+        return Matcher(pattern)
+
 
 class Matchline(object):
     def __init__(self, pattern, action):

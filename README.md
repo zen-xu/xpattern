@@ -25,6 +25,19 @@ from xpattern import m
 
 `caseof` is lazy, so you need to add `~` operator to run it!
 
+`m` is a matcher, if you don't like *circular brackets* style, you can alse use *square brackets* style
+
+```python
+from xpattern import caseof
+from xpattern import m
+
+
+~(caseof(v)
+    | m[pattern_1] >> action_1
+    | m[pattern_2] >> action_2
+)
+```
+
 ### Write a Fibonacci
 
 > The operator `_` means "match everything"

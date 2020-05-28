@@ -182,6 +182,31 @@ def test_match_XObject():
     )
 
 
+def test_match_XObject_with_getitem_style():
+    assert ~(caseof((1, 2, 3))
+        | m[X[2] == 3] >> True
+    )
+
+    with pytest.raises(MatchError):
+        ~(caseof((1, 2, 3))
+            | m[X[2]] >> True
+        )
+
+    assert ~(caseof("abc")
+        | m[X.upper() == "ABC"] >> True
+        | _ >> False
+    )
+
+    assert ~(caseof((1, 2, 3))
+        | m[X[2] == 3] >> X[2] + 4
+    ) == 7
+
+    assert ~(caseof(9)
+        | m[X ** 2 - X + 2 == 74] >> True
+        | _ >> False
+    )
+
+
 def test_xfunction():
     @xfunction
     def add(a, b):

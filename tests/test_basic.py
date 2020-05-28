@@ -5,7 +5,6 @@ from enum import Enum
 import pytest
 
 from pampy.helpers import UnderscoreType
-
 from xpattern import HEAD
 from xpattern import TAIL
 from xpattern import MatchError
@@ -23,19 +22,48 @@ def test_UnderscoreType_equals():
     "case",
     [
         (caseof(3) | m(3) >> True),
+        (caseof(3) | m[3] >> True),
         (caseof(3) | _ >> True),
         (caseof(3)
             | m(1) >> False
             | m(2) >> False
             | m(3) >> True
         ),
+        (caseof(3)
+            | m[1] >> False
+            | m[2] >> False
+            | m[3] >> True
+        ),
         (caseof([1, 2])
             | m([1]) >> False
             | m([1, 2]) >> True
         ),
+        (caseof([1, 2])
+            | m[[1]] >> False
+            | m[[1, 2]] >> True
+        ),
     ]
 )
 def test_basic(case):
+    assert ~case
+
+
+@pytest.mark.parametrize(
+    "case",
+    [
+        (caseof(3) | m[3] >> True),
+        (caseof(3)
+            | m[1] >> False
+            | m[2] >> False
+            | m[3] >> True
+        ),
+        (caseof([1, 2])
+            | m[[1]] >> False
+            | m[[1, 2]] >> True
+        ),
+    ]
+)
+def test_getitem_style(case):
     assert ~case
 
 
