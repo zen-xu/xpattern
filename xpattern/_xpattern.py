@@ -4,6 +4,7 @@ from pampy import MatchError
 from pampy import _
 from pampy.helpers import BoxedArgs
 from pampy.helpers import UnderscoreType
+from pampy.helpers import is_dataclass
 from pampy.pampy import NoDefault
 from pampy.pampy import match_value as pampy_match_value
 from pampy.pampy import run as pampy_run
@@ -67,8 +68,44 @@ def match_value(pattern, value):
                 f", but instead {return_value}"
             )
         return return_value, []
+    elif isinstance(pattern, dict):
+        return match_dict(pattern, value)
+    elif pattern == _:
+        return True, [value]
+    elif is_dataclass(pattern) and pattern.__class__ == value.__class__:
+        return match_dict(pattern.__dict__, value.__dict__)
 
     return pampy_match_value(pattern, value)
+
+
+def match_dict(pattern, value):
+    if not isinstance(value, dict) or not isinstance(pattern, dict):
+        return False, []
+
+    total_extracted = []
+    still_usable_value_keys = set(value.keys())
+    still_usable_pattern_keys = set(pattern.keys())
+    for pkey, pval in pattern.items():
+        if pkey not in still_usable_pattern_keys:
+            continue
+        matched_left_and_right = False
+        for vkey, vval in value.items():
+            if vkey not in still_usable_value_keys:
+                continue
+            if pkey not in still_usable_pattern_keys:
+                continue
+            key_matched, key_extracted = match_value(pkey, vkey)
+            if key_matched:
+                value_matched, value_extracted = match_value(pval, vval)
+                if value_matched:
+                    total_extracted += key_extracted + value_extracted
+                    matched_left_and_right = True
+                    still_usable_pattern_keys.remove(pkey)
+                    still_usable_value_keys.remove(vkey)
+                    break
+        if not matched_left_and_right:
+            return False, []
+    return True, total_extracted
 
 
 class caseof(object):

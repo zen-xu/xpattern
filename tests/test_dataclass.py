@@ -83,3 +83,36 @@ def test_dataclasses_with_xobject_action():
     assert f(Point(3, 2)) == 4
     assert f(Point(1, 9)) == 81
     assert f(Point(7, 3)) == [7, 3, 7, 3]
+
+
+def test_multi_dataclasses():
+    try:
+        from dataclasses import dataclass
+    except ImportError:
+        return
+
+    @dataclass
+    class Point:
+        x: int
+        y: int
+
+    @dataclass
+    class Point2:
+        x: int
+        y: int
+
+    @dataclass
+    class Line:
+        p1: Point
+        p2: Point
+
+    @dataclass
+    class Rect:
+        l1: Line
+        l2: Line
+
+    assert ~(caseof(Rect(Point(1, 2), Point(3, 4)))
+        | m(Rect(Point(_, str), Point(_, 4))) >> "first"
+        | m(Rect(Point(_, int), Point2(_, 4))) >> "second"
+        | m(Rect(Point(_, int), Point(_, 4))) >> (lambda x, y, z: (x, y, z))
+    ) == (1, 2, 3)

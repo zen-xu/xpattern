@@ -79,6 +79,43 @@ lisp((reduce, plus, (range, 10)))   # => 45
 )
 ```
 
+### Match dataclass
+
+```python
+from dataclasses import dataclass
+
+from xpattern import _
+from xpattern import caseof
+from xpattern import m
+
+
+@dataclass
+class Point:
+    x: int
+    y: int
+
+@dataclass
+class Point2:
+    x: int
+    y: int
+
+@dataclass
+class Line:
+    p1: Point
+    p2: Point
+
+@dataclass
+class Rect:
+    l1: Line
+    l2: Line
+
+~(caseof(Rect(Point(1, 2), Point(3, 4)))
+    | m(Rect(Point(_, str), Point(_, 4))) >> "first"
+    | m(Rect(Point(_, int), Point2(_, 4))) >> "second"
+    | m(Rect(Point(_, int), Point(_, 4))) >> (lambda x, y, z: (x, y, z))
+)  # => (1, 2, 3)
+```
+
 ### Match [HEAD, TAIL]
 
 ```python
