@@ -260,3 +260,20 @@ def test_typing_example():
     detailed_key_date_ts_str = detailed_key_date.strftime("%Y-%m-%d %H:%M:%S")
     assert to_datetime(detailed_key_date_ts_str) == detailed_key_date
     assert to_datetime(set(key_date_tuple)) is None
+
+
+def test_bitwise_operators_example():
+    assert ~(caseof(1)
+        | (m[2] | m[1]) >> 1
+        | _ >> "nothing"
+    ) == 1
+
+    assert ~(caseof(11)
+        | (m[lambda x: x > 1] & m[lambda x: x < 10]) >> "1 < x < 10"
+        | (m[lambda x: x > 1] & m[lambda x: x < 15]) >> "1 < x < 15"
+    ) == "1 < x < 15"
+
+    assert ~(caseof(6)
+        | ~m[lambda x: x > 5] >> "x <=5"
+        | ~m[lambda x: x > 10] >> "x <= 10"
+    ) == "x <= 10"

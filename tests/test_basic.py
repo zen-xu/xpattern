@@ -8,6 +8,7 @@ from pampy.helpers import UnderscoreType
 from xpattern import HEAD
 from xpattern import TAIL
 from xpattern import MatchError
+from xpattern import X
 from xpattern import _
 from xpattern import caseof
 from xpattern import m
@@ -222,3 +223,24 @@ def test_external_patterns():
     assert f([1, [1, "a"], 2]) == "[int, [int, str], int]"
     assert f([1, [1, "a", "c"], 2]) == "other"
     assert f(1) == "other"
+
+
+def test_matcher_with_bitwise_operators():
+    assert (m[1] | m[2]).pattern(1)
+    assert (m[1] | m[2]).pattern(2)
+    assert (m[X == 1] | m[X == 2]).pattern(1)
+    assert (m[X == 1] | m[X == 2]).pattern(2)
+    assert (m[lambda x: x == 1] | m[lambda x: x == 2]).pattern(1)
+    assert (m[lambda x: x == 1] | m[lambda x: x == 2]).pattern(1)
+
+    assert not (m[1] & m[2]).pattern(1)
+    assert not (m[1] & m[2]).pattern(2)
+    assert (m[X > 1] & m[X < 10]).pattern(4)
+    assert not (m[X > 1] & m[X < 10]).pattern(11)
+    assert (m[lambda x: x > 1] & m[lambda x: x < 10]).pattern(4)
+    assert not (m[lambda x: x > 1] & m[lambda x: x < 10]).pattern(11)
+
+    assert not (~(m[1] | m[2])).pattern(1)
+    assert not (~(m[1] | m[2])).pattern(2)
+    assert (~m[X == 1]).pattern(2)
+    assert (~m[lambda x: x == 1]).pattern(2)

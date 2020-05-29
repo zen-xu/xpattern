@@ -168,6 +168,30 @@ pet = {"type": "dog", "details": {"age": 3}}
 )  # => 3
 ```
 
+### With Bitwise Operators
+
+```python
+from xpattern import _
+from xpattern import caseof
+from xpattern import m
+
+
+~(caseof(1)
+    | (m[2] | m[1]) >> 1
+    | _ >> "nothing"
+) # => 1
+
+~(caseof(11)
+    | (m[lambda x: x > 1] & m[lambda x: x < 10]) >> "1 < x < 10"
+    | (m[lambda x: x > 1] & m[lambda x: x < 15]) >> "1 < x < 15"
+) # => "1 < x < 15"
+
+~(caseof(6)
+    | ~m[lambda x: x > 5]  >> "x <=5"
+    | ~m[lambda x: x > 10] >> "x <= 10"
+) # => "x <= 10"
+```
+
 ### More pattern cases
 
 > Your can visit repo [pampy](https://github.com/santinic/pampy/) get more pattern cases, `xpattern` is *Syntactic Sugar* of `pampy`

@@ -34,6 +34,30 @@ class Matcher(object):
     def __getitem__(self, pattern):
         return Matcher(pattern)
 
+    def __or__(self, other_matcher):
+        def new_pattern(value):
+            return (
+                match_value(self.pattern, value)[0]
+                or match_value(other_matcher.pattern, value)[0]
+            )
+
+        return Matcher(new_pattern)
+
+    def __and__(self, other_matcher):
+        def new_pattern(value):
+            return (
+                match_value(self.pattern, value)[0]
+                and match_value(other_matcher.pattern, value)[0]
+            )
+
+        return Matcher(new_pattern)
+
+    def __invert__(self):
+        def new_pattern(value):
+            return match_value(self.pattern, value)[0] ^ True
+
+        return Matcher(new_pattern)
+
 
 class Matchline(object):
     def __init__(self, pattern, action):
