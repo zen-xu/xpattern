@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xpattern"
-version = "0.4.0"
+version = "0.5.0"
 description = "Pattern Matching with XObject."
 authors = ["ZhengYu, Xu <zen-xu@outlook.com>"]
 license = "MIT"
