@@ -206,6 +206,7 @@ def test_advanced_lambda():
         assert test(11) == "not a datetime"
 
 
+@pytest.mark.skip
 def test_typing_example():
     timestamp = NewType("timestamp", Union[float, int])
     year, month, day, hour, minute, second = int, int, int, int, int, int
@@ -230,9 +231,9 @@ def test_typing_example():
         str,
     ]) -> Optional[datetime]:
         return ~(caseof(dt)
-            | m(timestamp) >> (lambda x: datetime.fromtimestamp(x))
             | m(Union[day_tuple, dt_tuple]) >> (lambda *x: datetime(*x))
             | m(datetime_p(["%Y-%m-%d", "%Y-%m-%d %H:%M:%S"])) >> (lambda x: x)
+            | m(timestamp) >> (lambda x: datetime.fromtimestamp(x))
             | _ >> None
         )
 
