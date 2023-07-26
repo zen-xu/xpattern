@@ -114,7 +114,7 @@ class XObject(object):
         return self._x_bind(lambda: "X % {0!r}".format(other), lambda x: x % other)
 
     def __pow__(self, other):
-        return self._x_bind(lambda: "X ** {0!r}".format(other), lambda x: x ** other)
+        return self._x_bind(lambda: "X ** {0!r}".format(other), lambda x: x**other)
 
     def __lshift__(self, other):
         return self._x_bind(lambda: "X << {0!r}".format(other), lambda x: x << other)
@@ -171,7 +171,7 @@ class XObject(object):
         return self._x_bind(lambda: "{0!r} % X".format(other), lambda x: other % x)
 
     def __rpow__(self, other):
-        return self._x_bind(lambda: "{0!r} ** X".format(other), lambda x: other ** x)
+        return self._x_bind(lambda: "{0!r} ** X".format(other), lambda x: other**x)
 
     def __rlshift__(self, other):
         return self._x_bind(lambda: "{0!r} << X".format(other), lambda x: other << x)
