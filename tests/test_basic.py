@@ -79,7 +79,7 @@ def test_match_value_is_vs_equal():
     a = "x" * 1000000
     b = "x" * 1000000
     assert a == b
-    assert not (a is b)
+    assert (a is not b)
     assert ~(caseof(a) | m(b) >> True)
 
 
@@ -211,8 +211,8 @@ def test_match_enum():
 
 
 def test_external_patterns():
-    def f(l):
-        return ~(caseof(l)
+    def f(value):
+        return ~(caseof(value)
             | m(int, int) >> "[int, int]"
             | m(int, str) >> "[int, str]"
             | m(int, [int, str], int) >> "[int, [int, str], int]"
