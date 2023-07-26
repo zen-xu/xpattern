@@ -36,6 +36,9 @@ not_skip = "__init__.py"
 skip_glob = ["*/setup.py"]
 filter_files = true
 
+[tool.ruff]
+target-version = "py37"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
