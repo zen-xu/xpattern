@@ -18,7 +18,7 @@ classifiers = [
 python = "^3.6.1"
 pampy = "^0.3.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.test.dependencies]
 pytest = "^5.4.2"
 pytest-cov = "^2.8.1"
 pytest-sugar = "^0.9.3"
@@ -37,5 +37,5 @@ skip_glob = ["*/setup.py"]
 filter_files = true
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
