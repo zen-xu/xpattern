@@ -20,7 +20,7 @@ jobs:
           architecture: x64
 
       - name: Install Poetry
-        uses: snok/install-poetry@v1.3.3
+        uses: snok/install-poetry@v1.3.4
         with:
           version: 1.3.1
 
