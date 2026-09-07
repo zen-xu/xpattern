@@ -13,7 +13,6 @@ from xpattern import _
 from xpattern import caseof
 from xpattern import m
 
-
 # fmt: off
 
 
