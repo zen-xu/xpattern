@@ -3,7 +3,6 @@ from xpattern import _
 from xpattern import caseof
 from xpattern import m
 
-
 # fmt: off
 def test_match_dict():
     pet = {"type": "dog", "details": {"age": 3}}

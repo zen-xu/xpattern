@@ -13,7 +13,6 @@ from ._xobject import Pipe
 from ._xobject import XObject
 from ._xobject import pipe
 
-
 UnderscoreType.__rshift__ = lambda self, other: Matcher(self) >> other
 UnderscoreType.__eq__ = lambda self, other: other.__class__ == self.__class__
 
